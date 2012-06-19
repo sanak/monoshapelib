@@ -1,0 +1,9 @@
+[Bb]in
+[Oo]bj
+*.user
+*.userprefs
+*.suo
+*.bak
+*.ncb
+*.DS_Store
+[Tt]humbs.db

@@ -1,0 +1,5 @@
+MonoShapelib
+============
+
+MonoShapelib is Shapelib(http://shapelib.maptools.org/) Mono(C#) port for MonoEV.  
+Currently target is Shapelib Release 1.12.10.  
