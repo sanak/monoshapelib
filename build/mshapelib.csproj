@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;TRIM_DBF_WHITESPACE;DISABLE_MULTIPATCH_MEASURE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -28,7 +28,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <DefineConstants>TRIM_DBF_WHITESPACE;DISABLE_MULTIPATCH_MEASURE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,6 +41,12 @@
     </Compile>
     <Compile Include="..\c.cs">
       <Link>c.cs</Link>
+    </Compile>
+    <Compile Include="..\dbfopen.cs">
+      <Link>dbfopen.cs</Link>
+    </Compile>
+    <Compile Include="..\shptree.cs">
+      <Link>shptree.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

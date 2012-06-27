@@ -34,28 +34,33 @@
  ******************************************************************************
  */
 
+#region Definitions
+
+/// <summary>
+/// Should the DBFHandle.ReadStringAttribute() strip leading and
+/// trailing white space?
+/// </summary>
+#define TRIM_DBF_WHITESPACE
+
+/// <summary>
+/// Should we write measure values to the Multipatch object?
+/// Reportedly ArcView crashes if we do write it, so for now it
+/// is disabled.
+/// </summary>
+#define DISABLE_MULTIPATCH_MEASURE
+
+/// <summary>
+/// this can be two or four for binary or quad tree
+/// </summary>
+#define MAX_SUBNODE_QUAD
+
+#endregion
+
 using System;
 using System.IO;
 
 namespace MonoShapelib
 {
-    #region Configuration options.
-    
-    /// <summary>
-    /// Should the DBFReadStringAttribute() strip leading and
-    /// trailing white space?
-    /// </summary>
-    //#define TRIM_DBF_WHITESPACE
-    
-    /// <summary>
-    /// Should we write measure values to the Multipatch object?
-    /// Reportedly ArcView crashes if we do write it, so for now it
-    /// is disabled.
-    /// </summary>
-    //#define DISABLE_MULTIPATCH_MEASURE
-    
-    #endregion
-    
     #region SHP Support.
     
     public partial class SHPHandle
@@ -217,16 +222,19 @@ namespace MonoShapelib
     }
     
     #region Shape quadtree indexing API.
-    
+
     public class SHPTreeNode
     {
-        #region Contants
-    
-        /* this can be two or four for binary or quad tree */
-        private const int MAX_SUBNODE = 4;
-    
+        #region Constants
+        
+#if MAX_SUBNODE_QUAD
+        private const int   MAX_SUBNODE = 4;
+#else
+        private const int   MAX_SUBNODE = 2;
+#endif
+
         #endregion
-    
+
         #region Fields
     
         /* region covered by this node */
@@ -237,7 +245,7 @@ namespace MonoShapelib
            or the whole list can be NULL */
         public  int         nShapeCount;
         public  int[]       panShapeIds;
-        public  SHPObject[,] papsShapeObj;
+        public  SHPObject[] papsShapeObj;
     
         public  int         nSubNodes;
         public  SHPTreeNode[] apsSubNode = new SHPTreeNode[MAX_SUBNODE];
@@ -254,7 +262,7 @@ namespace MonoShapelib
         public  int         nMaxDepth;
         public  int         nDimension;
         
-        public  SHPTreeNode[] psRoot;
+        public  SHPTreeNode psRoot;
     
         #endregion
     
@@ -311,7 +319,7 @@ namespace MonoShapelib
         public  int[]       panFieldOffset;
         public  int[]       panFieldSize;
         public  int[]       panFieldDecimals;
-        public  byte[]      pachFieldType;
+        public  char[]      pachFieldType;
     
         public  byte[]      pszHeader;
     

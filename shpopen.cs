@@ -34,8 +34,9 @@
  ******************************************************************************
  */
 
+#define DISABLE_MULTIPATCH_MEASURE
+
 using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace MonoShapelib
@@ -103,7 +104,7 @@ namespace MonoShapelib
 
         private static void SwapWord( int length, ref int intP )
         {
-            Debug.Assert( length == 4 );
+            c.assert( length == 4 );
             byte[]  wordP = BitConverter.GetBytes( intP );
             SwapWord( 4, wordP, 0 );
             intP = BitConverter.ToInt32( wordP, 0 );
@@ -111,7 +112,7 @@ namespace MonoShapelib
 
         private static void SwapWord( int length, ref double doubleP )
         {
-            Debug.Assert( length == 8 );
+            c.assert( length == 8 );
             byte[] wordP = BitConverter.GetBytes( doubleP );
             SwapWord( 8, wordP, 0 );
             doubleP = BitConverter.ToDouble( wordP, 0 );
@@ -296,7 +297,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             pszBasename = null;
             c.strcpy( ref pszBasename, pszLayer );
-            for( i = c.strlen(pszBasename)-1; 
+            for( i = c.strlenp(pszBasename)-1; 
              i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
                    && pszBasename[i] != '\\';
              i-- ) {}
@@ -578,7 +579,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             pszBasename = null;
             c.strcpy( ref pszBasename, pszLayer );
-            for( i = c.strlen(pszBasename)-1; 
+            for( i = c.strlenp(pszBasename)-1; 
              i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
                    && pszBasename[i] != '\\';
              i-- ) {}
@@ -705,7 +706,7 @@ namespace MonoShapelib
             /*      Ensure that shape object matches the type of the file it is     */
             /*      being written to.                                               */
             /* -------------------------------------------------------------------- */
-            Debug.Assert( psObject.nSHPType == psSHP.nShapeType 
+            c.assert( psObject.nSHPType == psSHP.nShapeType 
                     || psObject.nSHPType == SHPT.NULL );
         
             /* -------------------------------------------------------------------- */
@@ -713,7 +714,7 @@ namespace MonoShapelib
             /*      assertion, or if they are disabled, set the shapeid to -1       */
             /*      for appends.                                                    */
             /* -------------------------------------------------------------------- */
-            Debug.Assert( nShapeId == -1 
+            c.assert( nShapeId == -1 
                     || (nShapeId >= 0 && nShapeId < psSHP.nRecords) );
         
             if( nShapeId != -1 && nShapeId >= psSHP.nRecords )
@@ -966,7 +967,7 @@ namespace MonoShapelib
             else
             {
                 /* unknown type */
-                Debug.Assert( false );
+                c.assert( false );
             }
         
             /* -------------------------------------------------------------------- */
@@ -1711,8 +1712,8 @@ namespace MonoShapelib
                 psObject.padfZ = new double[nVertices];
                 psObject.padfM = new double[nVertices];
         
-                Debug.Assert( padfX != null );
-                Debug.Assert( padfY != null );
+                c.assert( padfX != null );
+                c.assert( padfY != null );
             
                 for( i = 0; i < nVertices; i++ )
                 {

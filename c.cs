@@ -36,19 +36,81 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace MonoShapelib
 {
     public class c
     {
+        #region Fields
+
+        private const int   EOF = -1;
+
+        // TODO:LLID, .cpg .etc
+        public static Encoding cpg = Encoding.Default;
+
+        #endregion
+
         #region Methods
 
+        #region <assert.h>
+
+        public static void assert( bool expression )
+        
+        {
+            Debug.Assert( expression );
+        }
+
+        #endregion
+
+        #region <math.h>
+
+        public static double atof( string str )
+
+        {
+            try
+            {
+                return double.Parse( str );
+            }
+            catch
+            {
+                return 0.0;
+            }
+        }
+
+        public static int atoi( string str )
+
+        {
+            try
+            {
+                return int.Parse( str );
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public static double fabs( double x )
+        
+        {
+            return Math.Abs( x );
+        }
+
+        #endregion
+
         #region <memory.h>
+
+        public static void memcpy<T>( T[] dst, T[] src, int count )
+
+        {
+            Buffer.BlockCopy( src, 0, dst, 0, count );
+        }
 
         public static void memcpy( ref double dst, byte[] src, int offset, int count )
     
         {
-            Debug.Assert( count == 8 );
+            c.assert( count == 8 );
             dst = BitConverter.ToDouble( src, offset );
         }
 
@@ -91,7 +153,21 @@ namespace MonoShapelib
             }
             catch
             {
-                return -1; // EOF
+                return EOF;
+            }
+        }
+
+        public static int fflush( TextWriter stream )
+        
+        {
+            try
+            {
+                stream.Flush();
+                return 0;
+            }
+            catch
+            {
+                return EOF;
             }
         }
 
@@ -136,13 +212,30 @@ namespace MonoShapelib
             return str.Length;
         }
 
+        public static int fputc( int c, FileStream stream )
+
+        {
+            try
+            {
+                byte value = (byte)c;
+                stream.WriteByte( value );
+                return (int)value;
+            }
+            catch
+            {
+                return EOF;
+            }
+        }
+
         public static int fread( byte[] buffer, int size, int count, FileStream stream )
         
         {
             try
             {
-                if( size == 0 || count == 0 ) return 0;
-                return stream.Read( buffer, 0, size * count );
+                if( size == 0 || count == 0 )
+                    return 0;
+                int readCount = stream.Read( buffer, 0, size * count );
+                return readCount / size;
             }
             catch
             {
@@ -196,13 +289,29 @@ namespace MonoShapelib
         }
 
         public static int printf( string format, params object[] args )
+
         {
             string  buffer = string.Format( format, args );
             Console.Write( buffer );
             return buffer.Length;
         }
 
+        public static int puts( string str )
+
+        {
+            try
+            {
+                Console.WriteLine( str );
+                return 0;
+            }
+            catch
+            {
+                return EOF;
+            }
+        }
+
         public static int sprintf( ref string buffer, string format, params object[] args )
+
         {
             buffer = string.Format( format, args );
             return buffer.Length;
@@ -210,6 +319,7 @@ namespace MonoShapelib
 
         // TODO:use format parameter
         public static int sscanf( string buffer, string format, ref double argument )
+
         {
             try
             {
@@ -227,6 +337,7 @@ namespace MonoShapelib
         #region <stdlib.h>
 
         public static void exit( int status )
+
         {
             Environment.Exit( status );
         }
@@ -242,31 +353,31 @@ namespace MonoShapelib
         {
             memblock = null;
         }
-
-        public static void free( ref byte[] memblock )
-
-        {
-            memblock = null;
-        }
-
-        public static void free( ref int[] memblock )
+        
+        public static void free<T>( ref T[] memblock )
 
         {
             memblock = null;
         }
-
-        public static void free( ref double[] memblock )
-
-        {
-            memblock = null;
-        }
-
+        
         public static void free( ref SHPHandle memblock )
 
         {
             memblock = null;
         }
 
+        public static void free( ref SHPTreeNode memblock )
+
+        {
+            memblock = null;
+        }
+
+        public static void free( ref DBFHandle memblock )
+
+        {
+            memblock = null;
+        }
+        
         public static T[] realloc<T>( ref T[] pMem, int nNewSize )
         
         {
@@ -278,23 +389,104 @@ namespace MonoShapelib
 
         #region <string.h>
 
+        public static byte[] memset( byte[] dest, int offset, int c, int count )
+
+        {
+            for( int i = 0; i < count; i++ )
+            {
+                dest[offset+i] = (byte)c;
+            }
+            return dest;
+        }
+
+        public static string strcat( ref string strDst, string strSrc )
+        
+        {
+            strDst = string.Concat( strDst, strSrc );
+            return strDst;
+        }
+
         public static int strcmp( string string1, string string2 )
+        
         {
             return string.Compare( string1, string2 );
         }
 
         public static string strcpy( ref string strDst, string strSrc )
+        
         {
             strDst = strSrc;
             return strDst;
         }
 
         public static int strlen( string str )
+        
+        {
+            if( string.IsNullOrEmpty( str ) )
+                return 0;
+            else
+                return cpg.GetByteCount( str );
+        }
+
+        // for path string parse
+        public static int strlenp( string str )
+        
         {
             if( string.IsNullOrEmpty( str ) )
                 return 0;
             else
                 return str.Length;
+        }
+
+        // "str" should not include null terminate char
+        public static int strlen( byte[] str )
+        
+        {
+            return str.Length;
+        }
+
+        public static int strncmp( string string1, string string2, int count )
+        
+        {
+            return string.Compare( string1, 0, string2, 0, count );
+        }
+
+        public static byte[] strncpy( byte[] strDst, int offset, byte[] strSrc, int count )
+        
+        {
+            Buffer.BlockCopy( strSrc, 0, strDst, offset, count );
+            return strDst;
+        }
+
+        public static byte[] strncpy( byte[] strDst, byte[] strSrc, int offset, int count )
+        
+        {
+            Buffer.BlockCopy( strSrc, offset, strDst, 0, count );
+            return strDst;
+        }
+
+        public static byte[] strncpy( byte[] strDst, string strSrc, int count )
+        
+        {
+            byte[] src = cpg.GetBytes( strSrc );
+            Buffer.BlockCopy( src, 0, strDst, 0, count );
+            return strDst;
+        }
+
+        public static byte[] strncpy( byte[] strDst, int offset, string strSrc, int count )
+        
+        {
+            byte[] src = cpg.GetBytes( strSrc );
+            Buffer.BlockCopy( src, 0, strDst, offset, count );
+            return strDst;
+        }
+
+        public static string strncpy( out string strDst, string strSrc, int count )
+        
+        {
+            byte[] src = cpg.GetBytes( strSrc );
+            strDst = cpg.GetString( src, 0, count ).TrimEnd( '\0' );
+            return strDst;
         }
 
         #endregion
