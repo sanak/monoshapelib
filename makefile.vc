@@ -44,3 +44,44 @@ clean:
 	del *.pdb
 	del *.exe
 	del *.dll
+
+test:	test2 test3
+
+#
+#	Note this stream only works if example data is unzipped.
+#	$ unzip ./eg_data/shape_eg_data.zip -d ./eg_data
+#
+test1:
+	@.\stream1.bat > s1.out
+	@fc s1.out stream1.out
+	if %errorlevel% == 0 ( \
+	    echo "******* Stream 1 Succeeded *********"; \
+	    del s1.out; \
+	) else ( \
+	    echo "******* Stream 1 Failed *********"; \
+	    fc s1.out stream1.out; \
+	)
+
+test2:
+	@.\stream2.bat > s2.out
+	@fc s2.out stream2.out
+	if %errorlevel% == 0 ( \
+	    echo "******* Stream 2 Succeeded *********"; \
+	    del s2.out; \
+	    del test*.s??; \
+	) else ( \
+	    echo "******* Stream 2 Failed *********"; \
+	    fc s2.out stream2.out; \
+	)
+
+test3:
+	@.\makeshape.bat > s3.out
+	@fc s3.out stream3.out
+	if %errorlevel& == 0 ( \
+	    echo "******* Stream 3 Succeeded *********"; \
+	    del s3.out; \
+	    del test.*; \
+	) else ( \
+	    echo "******* Stream 3 Failed *********"; \
+	    fc s3.out stream3.out; \
+	)
