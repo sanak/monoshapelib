@@ -5,5 +5,12 @@
 *.suo
 *.bak
 *.ncb
+*.pdb
+*.exe
+*.dll
+*.shp
+*.shx
+*.dbf
+*.aux
 *.DS_Store
 [Tt]humbs.db

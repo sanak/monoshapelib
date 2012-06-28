@@ -91,8 +91,8 @@ namespace MonoShapelib
             c.printf( "Shapefile Type: {0}   # of Shapes: {1}\n\n",
                     SHP.TypeName( nShapeType ), nEntities );
             
-            c.printf( "File Bounds: ({0:F3},{1:F3},{2:G},{3:G})\n"
-                     + "         to  ({4:F3},{5:F3},{6:G},{7:G})\n",
+            c.printf( "File Bounds: ({0,12:F3},{1,12:F3},{2:G},{3:G})\n"
+                     + "         to  ({4,12:F3},{5,12:F3},{6:G},{7:G})\n",
                     adfMinBound[0], 
                     adfMinBound[1], 
                     adfMinBound[2], 
@@ -113,8 +113,8 @@ namespace MonoShapelib
                 psShape = hSHP.ReadObject( i );
         
                 c.printf( "\nShape:{0} ({1})  nVertices={2}, nParts={3}\n"
-                       + "  Bounds:({4:F3},{5:F3}, {6:G}, {7:G})\n"
-                         + "      to ({8:F3},{9:F3}, {10:G}, {11:G})\n",
+                       + "  Bounds:({4,12:F3},{5,12:F3}, {6:G}, {7:G})\n"
+                         + "      to ({8,12:F3},{9,12:F3}, {10:G}, {11:G})\n",
                         i, SHP.TypeName(psShape.nSHPType),
                             psShape.nVertices, psShape.nParts,
                             psShape.dfXMin, psShape.dfYMin,
@@ -139,7 +139,7 @@ namespace MonoShapelib
                     else
                         pszPlus = " ";
                 
-                    c.printf("   {0} ({1:F3},{2:F3}, {3:G}, {4:G}) {5} \n",
+                    c.printf("   {0} ({1,12:F3},{2,12:F3}, {3:G}, {4:G}) {5} \n",
                                pszPlus,
                                psShape.padfX[j],
                                psShape.padfY[j],

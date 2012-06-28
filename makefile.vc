@@ -1,0 +1,46 @@
+
+CSC = csc
+
+default:	all
+
+all:	mshapelib.dll mshpcreate.exe mshpadd.exe mshpdump.exe mshprewind.exe \
+	mdbfcreate.exe mdbfadd.exe mdbfdump.exe mshptest.exe mshptreedump.exe
+
+mshapelib.dll:		shpopen.cs dbfopen.cs shptree.cs
+	$(CSC) $(CSFLAGS) /target:library /out:mshapelib.dll \
+	shapefil.cs shpopen.cs dbfopen.cs shptree.cs c.cs
+
+mshpcreate.exe:	shpcreate.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshpcreate.exe shpcreate.cs
+
+mshpadd.exe:	shpadd.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshpadd.exe shpadd.cs
+
+mshpdump.exe:	shpdump.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshpdump.exe shpdump.cs
+
+mshprewind.exe:	shprewind.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshprewind.exe shprewind.cs
+
+mdbfcreate.exe:	dbfcreate.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mdbfcreate.exe dbfcreate.cs
+
+mdbfadd.exe:	dbfadd.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mdbfadd.exe dbfadd.cs
+
+mdbfdump.exe:	dbfdump.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mdbfdump.exe dbfdump.cs
+
+mshptest.exe:	shptest.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshptest.exe shptest.cs
+
+mshputils.exe:	shputils.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshputils.exe shputils.cs
+
+mshptreedump.exe:	shptreedump.cs mshapelib.dll
+	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshptreedump.exe shptreedump.cs
+
+clean:
+	del *.pdb
+	del *.exe
+	del *.dll
