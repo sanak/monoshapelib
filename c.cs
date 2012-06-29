@@ -184,6 +184,8 @@ namespace MonoShapelib
                 _mode = FileMode.Open;
                 break;
             case "r+b":
+            case "rb+":
+            case "r+":
                 access = FileAccess.ReadWrite;
                 _mode = FileMode.Open;
                 break;

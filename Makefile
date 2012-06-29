@@ -5,7 +5,7 @@ default:	all
 all:	mshapelib.dll mshpcreate.exe mshpadd.exe mshpdump.exe mshprewind.exe \
 	mdbfcreate.exe mdbfadd.exe mdbfdump.exe mshptest.exe mshptreedump.exe
 
-mshapelib.dll:		shpopen.cs dbfopen.cs shptree.cs
+mshapelib.dll:		shapefil.cs shpopen.cs dbfopen.cs shptree.cs c.cs
 	$(CSC) $(CSFLAGS) /target:library /out:mshapelib.dll \
 	shapefil.cs shpopen.cs dbfopen.cs shptree.cs c.cs
 

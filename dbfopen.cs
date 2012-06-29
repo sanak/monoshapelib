@@ -1000,7 +1000,7 @@ namespace MonoShapelib
                         nWidth = szSField.Length-2;
 
                     szFormat = string.Concat( "{0,", nWidth.ToString(), "}" );
-                    c.sprintf(ref szSField, szFormat, (int)pValue );
+                    c.sprintf(ref szSField, szFormat, (int)((double)pValue) );
                     if( (int)c.strlen(szSField) > psDBF.panFieldSize[iField] )
                     {
                         szSField = szSField.Substring(psDBF.panFieldSize[iField]);

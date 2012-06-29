@@ -49,7 +49,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             if( args.Length < 2 )
             {
-                c.printf( "dbfadd xbase_file field_values\n" );
+                c.printf( "mdbfadd xbase_file field_values\n" );
 
                 c.exit( 1 );
             }
@@ -60,7 +60,7 @@ namespace MonoShapelib
             hDBF = DBFHandle.Open( args[0], "r+b" );
             if( hDBF == null )
             {
-                c.printf( "DBFOpen({0},\"rb+\") failed.\n", args[0] );
+                c.printf( "DBFHandle.Open({0},\"rb+\") failed.\n", args[0] );
                 c.exit( 2 );
             }
             
@@ -83,13 +83,13 @@ namespace MonoShapelib
             {
                 string sFieldName;
                 int nWidth, nDecimals;
-                if( c.strcmp( args[i+2], "" ) == 0 )
+                if( c.strcmp( args[i+1], "" ) == 0 )
                     hDBF.WriteNULLAttribute( iRecord, i );
                 else if( hDBF.GetFieldInfo( i, out sFieldName, out nWidth,
                                            out nDecimals ) == FT.String )
-                    hDBF.WriteStringAttribute( iRecord, i, args[i+2] );
+                    hDBF.WriteStringAttribute( iRecord, i, args[i+1] );
                 else
-                    hDBF.WriteDoubleAttribute( iRecord, i, c.atof(args[i+2]) );
+                    hDBF.WriteDoubleAttribute( iRecord, i, c.atof(args[i+1]) );
             }
 
             /* -------------------------------------------------------------------- */

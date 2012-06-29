@@ -107,7 +107,7 @@ Global
 		{F9A94D6C-185D-41EF-B2EB-912B7030E298}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = mdbfdump.csproj
+		StartupItem = mshptest.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None

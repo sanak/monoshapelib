@@ -49,7 +49,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             if( args.Length < 1 )
             {
-                c.printf( "dbfcreate xbase_file [[-s field_name width],[-n field_name width decimals]]...\n" );
+                c.printf( "mdbfcreate xbase_file [[-s field_name width],[-n field_name width decimals]]...\n" );
 
                 c.exit( 1 );
             }
@@ -60,7 +60,7 @@ namespace MonoShapelib
             hDBF = DBFHandle.Create( args[0] );
             if( hDBF == null )
             {
-                c.printf( "DBFCreate({0}) failed.\n", args[0] );
+                c.printf( "DBFHandle.Create({0}) failed.\n", args[0] );
                 c.exit( 2 );
             }
 
@@ -74,7 +74,7 @@ namespace MonoShapelib
                     if( hDBF.AddField( args[i+1], FT.String, c.atoi(args[i+2]), 0 )
                             == -1 )
                     {
-                        c.printf( "DBFAddField({0},FTString,{1},0) failed.\n",
+                        c.printf( "DBFHandle.AddField({0},FTString,{1},0) failed.\n",
                                 args[i+1], c.atoi(args[i+2]) );
                         c.exit( 4 );
                     }
@@ -85,7 +85,7 @@ namespace MonoShapelib
                     if( hDBF.AddField( args[i+1], FT.Double, c.atoi(args[i+2]), 
                                 c.atoi(args[i+3]) ) == -1 )
                     {
-                        c.printf( "DBFAddField({0},FTDouble,{1},{2}) failed.\n",
+                        c.printf( "DBFHandle.AddField({0},FTDouble,{1},{2}) failed.\n",
                                 args[i+1], c.atoi(args[i+2]), c.atoi(args[i+3]) );
                         c.exit( 4 );
                     }

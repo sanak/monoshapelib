@@ -6,7 +6,7 @@ default:	all
 all:	mshapelib.dll mshpcreate.exe mshpadd.exe mshpdump.exe mshprewind.exe \
 	mdbfcreate.exe mdbfadd.exe mdbfdump.exe mshptest.exe mshptreedump.exe
 
-mshapelib.dll:		shpopen.cs dbfopen.cs shptree.cs
+mshapelib.dll:		shapefil.cs shpopen.cs dbfopen.cs shptree.cs c.cs
 	$(CSC) $(CSFLAGS) /target:library /out:mshapelib.dll \
 	shapefil.cs shpopen.cs dbfopen.cs shptree.cs c.cs
 
@@ -41,9 +41,9 @@ mshptreedump.exe:	shptreedump.cs mshapelib.dll
 	$(CSC) $(CSFLAGS) /r:mshapelib.dll /out:mshptreedump.exe shptreedump.cs
 
 clean:
-	del *.pdb
-	del *.exe
-	del *.dll
+	-del *.pdb
+	-del *.exe
+	-del *.dll
 
 test:	test2 test3
 
@@ -53,35 +53,47 @@ test:	test2 test3
 #
 test1:
 	@.\stream1.bat > s1.out
-	@fc s1.out stream1.out
-	if %errorlevel% == 0 ( \
-	    echo "******* Stream 1 Succeeded *********"; \
-	    del s1.out; \
-	) else ( \
-	    echo "******* Stream 1 Failed *********"; \
-	    fc s1.out stream1.out; \
+	@-fc s1.out stream1.out | more +4 > s1.diff
+	@for %%f in (s1.diff) do @( \
+		@if %%~zf == 0 ( \
+			echo "******* Stream 1 Succeeded *********" & \
+			del s1.diff & \
+			del s1.out \
+		) else ( \
+			echo "******* Stream 1 Failed *********" & \
+			del s1.diff & \
+			fc s1.out stream1.out \
+		) \
 	)
 
 test2:
 	@.\stream2.bat > s2.out
-	@fc s2.out stream2.out
-	if %errorlevel% == 0 ( \
-	    echo "******* Stream 2 Succeeded *********"; \
-	    del s2.out; \
-	    del test*.s??; \
-	) else ( \
-	    echo "******* Stream 2 Failed *********"; \
-	    fc s2.out stream2.out; \
+	@-fc s2.out stream2.out | more +4 > s2.diff
+	@for %%f in (s2.diff) do @( \
+		@if %%~zf == 0 ( \
+			echo "******* Stream 2 Succeeded *********" & \
+			del s2.diff & \
+			del s2.out & \
+			del test*.s?? \
+		) else ( \
+			echo "******* Stream 2 Failed *********" & \
+			del s2.diff & \
+			fc s2.out stream2.out \
+		) \
 	)
 
 test3:
 	@.\makeshape.bat > s3.out
-	@fc s3.out stream3.out
-	if %errorlevel& == 0 ( \
-	    echo "******* Stream 3 Succeeded *********"; \
-	    del s3.out; \
-	    del test.*; \
-	) else ( \
-	    echo "******* Stream 3 Failed *********"; \
-	    fc s3.out stream3.out; \
+	@-fc s3.out stream3.out | more +4 > s3.diff
+	@for %%f in (s3.diff) do @( \
+		@if %%~zf == 0 ( \
+			echo "******* Stream 3 Succeeded *********" & \
+			del s3.diff & \
+			del s3.out & \
+			del test.* \
+		) else ( \
+			echo "******* Stream 3 Failed *********" & \
+			del s3.diff & \
+			fc s3.out stream3.out \
+		) \
 	)

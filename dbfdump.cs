@@ -75,7 +75,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             if( pszFilename == null )
             {
-                c.printf( "dbfdump [-h] [-r] [-m] xbase_file\n" );
+                c.printf( "mdbfdump [-h] [-r] [-m] xbase_file\n" );
                     c.printf( "        -h: Write header info (field descriptions)\n" );
                     c.printf( "        -r: Write raw field info, numeric values not reformatted\n" );
                     c.printf( "        -m: Multiline, one line per field.\n" );

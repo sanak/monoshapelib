@@ -836,7 +836,7 @@ namespace MonoShapelib
                  */
                 if( psObject.nSHPType == SHPT.POLYGONM
                     || psObject.nSHPType == SHPT.ARCM
-#if DISABLE_MULTIPATCH_MEASURE            
+#if !DISABLE_MULTIPATCH_MEASURE            
                     || psObject.nSHPType == SHPT.MULTIPATCH
 #endif            
                     || psObject.nSHPType == SHPT.POLYGONZ
