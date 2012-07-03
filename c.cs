@@ -312,6 +312,19 @@ namespace MonoShapelib
             }
         }
 
+        public static int remove( string path )
+        
+        {
+            try
+            {
+                File.Delete( path );
+                return 0;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
         public static int sprintf( ref string buffer, string format, params object[] args )
 
         {

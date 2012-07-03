@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9313D1BC-AC5E-4189-9D71-6B6019587E94}</ProjectGuid>
+    <ProjectGuid>{7670A2D4-D20D-47EE-ADE5-55DC3D798BA7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>mshptreedump</RootNamespace>
-    <AssemblyName>mshptreedump</AssemblyName>
+    <RootNamespace>mshputils</RootNamespace>
+    <AssemblyName>mshputils</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,14 +35,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\shptreedump.cs">
-      <Link>shptreedump.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="mshapelib.csproj">
       <Project>{C91D3640-639B-46F5-AC6B-708A7D3EFF13}</Project>
       <Name>mshapelib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\shputils.cs">
+      <Link>shputils.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -145,7 +145,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             /*      Dump tree by recursive descent.                                 */
             /* -------------------------------------------------------------------- */
-            if( nDoSearch != 0 )
+            if( nDoSearch == 0 )
                 SHPTreeNodeDump( psTree, psTree.psRoot, "", nExpandShapes );
 
             /* -------------------------------------------------------------------- */

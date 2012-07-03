@@ -85,10 +85,10 @@ namespace MonoShapelib
             psTreeNode.nSubNodes = 0;
 
             if( padfBoundsMin != null )
-                c.memcpy( psTreeNode.adfBoundsMin, padfBoundsMin, 4 );
+                c.memcpy( psTreeNode.adfBoundsMin, padfBoundsMin, sizeof(double) * 4 );
 
             if( padfBoundsMax != null )
-                c.memcpy( psTreeNode.adfBoundsMax, padfBoundsMax, 4 );
+                c.memcpy( psTreeNode.adfBoundsMax, padfBoundsMax, sizeof(double) * 4 );
 
             return psTreeNode;
         }
@@ -293,10 +293,10 @@ namespace MonoShapelib
             /*      The output bounds will be very similar to the input bounds,     */
             /*      so just copy over to start.                                     */
             /* -------------------------------------------------------------------- */
-            c.memcpy( padfBoundsMin1, padfBoundsMinIn, 4 );
-            c.memcpy( padfBoundsMax1, padfBoundsMaxIn, 4 );
-            c.memcpy( padfBoundsMin2, padfBoundsMinIn, 4 );
-            c.memcpy( padfBoundsMax2, padfBoundsMaxIn, 4 );
+            c.memcpy( padfBoundsMin1, padfBoundsMinIn, sizeof(double) * 4 );
+            c.memcpy( padfBoundsMax1, padfBoundsMaxIn, sizeof(double) * 4 );
+            c.memcpy( padfBoundsMin2, padfBoundsMinIn, sizeof(double) * 4 );
+            c.memcpy( padfBoundsMax2, padfBoundsMaxIn, sizeof(double) * 4 );
             
             /* -------------------------------------------------------------------- */
             /*      Split in X direction.                                           */
@@ -304,7 +304,7 @@ namespace MonoShapelib
             if( (padfBoundsMaxIn[0] - padfBoundsMinIn[0])
                             > (padfBoundsMaxIn[1] - padfBoundsMinIn[1]) )
             {
-                double	dfRange = padfBoundsMaxIn[0] - padfBoundsMinIn[0];
+                double  dfRange = padfBoundsMaxIn[0] - padfBoundsMinIn[0];
 
                 padfBoundsMax1[0] = padfBoundsMinIn[0] + dfRange * SHP_SPLIT_RATIO;
                 padfBoundsMin2[0] = padfBoundsMaxIn[0] - dfRange * SHP_SPLIT_RATIO;
@@ -315,7 +315,7 @@ namespace MonoShapelib
             /* -------------------------------------------------------------------- */
             else
             {
-                double	dfRange = padfBoundsMaxIn[1] - padfBoundsMinIn[1];
+                double  dfRange = padfBoundsMaxIn[1] - padfBoundsMinIn[1];
 
                 padfBoundsMax1[1] = padfBoundsMinIn[1] + dfRange * SHP_SPLIT_RATIO;
                 padfBoundsMin2[1] = padfBoundsMaxIn[1] - dfRange * SHP_SPLIT_RATIO;

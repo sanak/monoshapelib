@@ -1368,13 +1368,13 @@ namespace MonoShapelib
             newDBF.nHeaderLength = 32 * (psDBF.nFields+1);
 
             newDBF.panFieldOffset = new int[psDBF.nFields]; 
-            c.memcpy ( newDBF.panFieldOffset, psDBF.panFieldOffset, psDBF.nFields );
+            c.memcpy ( newDBF.panFieldOffset, psDBF.panFieldOffset, sizeof(int) * psDBF.nFields );
             newDBF.panFieldSize = new int[psDBF.nFields]; 
-            c.memcpy ( newDBF.panFieldSize, psDBF.panFieldSize, psDBF.nFields );
+            c.memcpy ( newDBF.panFieldSize, psDBF.panFieldSize, sizeof(int) * psDBF.nFields );
             newDBF.panFieldDecimals = new int[psDBF.nFields]; 
-            c.memcpy ( newDBF.panFieldDecimals, psDBF.panFieldDecimals, psDBF.nFields );
+            c.memcpy ( newDBF.panFieldDecimals, psDBF.panFieldDecimals, sizeof(int) * psDBF.nFields );
             newDBF.pachFieldType = new char[psDBF.nFields];
-            c.memcpy ( newDBF.pachFieldType, psDBF.pachFieldType, psDBF.nFields );
+            c.memcpy ( newDBF.pachFieldType, psDBF.pachFieldType, sizeof(int) * psDBF.nFields );
 
             newDBF.bNoHeader = true;
             newDBF.bUpdated = true;
